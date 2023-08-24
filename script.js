@@ -23,7 +23,10 @@ arrowIcons.forEach((icon) => {
 })
 
 const autoSlide = () => {
-  
+  positionDiff = Math.abs(positionDiff)
+  let firstImgWidth = firstImg.clientWidth + 14
+  let valDifference = firstImgWidth - positionDiff
+  console.log(valDifference) 
 }
 
 let dragStart = (e) => {
