@@ -32,14 +32,12 @@ const autoSlide = () => {
     return carousel.scrollLeft += positionDiff > firstImgWidth / 3 ? valDifference : -positionDiff
   }
   carousel.scrollLeft -= positionDiff > firstImgWidth / 3 ? valDifference : -positionDiff
-  console.log(valDifference)
 }
 
 let dragStart = (e) => {
   isDragStart = true
   prevPageX = e.pageX || e.touches[0].pageX
   prevScrollLeft = carousel.scrollLeft
-  console.log("prevScrollLeft degeri..: " + prevScrollLeft)
 }
 
 const dragging = (e) => {
@@ -49,7 +47,6 @@ const dragging = (e) => {
   carousel.classList.add("dragging")
   positionDiff = (e.pageX || e.touches[0].pageX) - prevPageX
   carousel.scrollLeft = prevScrollLeft - positionDiff
-  console.log("dragging carousel.scrollLeft degeri..: " + carousel.scrollLeft)
   showHideIcons()
 }
 
