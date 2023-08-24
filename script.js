@@ -5,7 +5,8 @@ arrowIcons = document.querySelectorAll(".wrapper i")
 let isDragStart = false,
   prevPageX,
   prevScrollLeft,
-  positionDiff
+  positionDiff,
+  isDragging = false
 
 const showHideIcons = () => {
   let scrollWidth = carousel.scrollWidth - carousel.clientWidth
@@ -23,10 +24,15 @@ arrowIcons.forEach((icon) => {
 })
 
 const autoSlide = () => {
+  if (carousel.scrollLeft == (carousel.scrollWidth - carousel.clientWidth)) return
   positionDiff = Math.abs(positionDiff)
   let firstImgWidth = firstImg.clientWidth + 14
   let valDifference = firstImgWidth - positionDiff
-  console.log(valDifference) 
+  if (carousel.scrollLeft > prevScrollLeft) {
+    return carousel.scrollLeft += positionDiff > firstImgWidth / 3 ? valDifference : -positionDiff
+  }
+  carousel.scrollLeft -= positionDiff > firstImgWidth / 3 ? valDifference : -positionDiff
+  console.log(valDifference)
 }
 
 let dragStart = (e) => {
@@ -39,6 +45,7 @@ let dragStart = (e) => {
 const dragging = (e) => {
   if (!isDragStart) return
   e.preventDefault()
+  isDragging = true
   carousel.classList.add("dragging")
   positionDiff = (e.pageX || e.touches[0].pageX) - prevPageX
   carousel.scrollLeft = prevScrollLeft - positionDiff
@@ -49,6 +56,9 @@ const dragging = (e) => {
 let dragStop = () => {
   isDragStart = false
   carousel.classList.remove("dragging")
+
+  if (!isDragging) return
+  isDragging = false
   autoSlide()
 }
 carousel.addEventListener("mousedown", dragStart)
